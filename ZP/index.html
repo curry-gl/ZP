@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css"/>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div class="head">
+        <div class="h_c">
+            <div class="hl">
+                <p>北京 <span>[切换城市]</span></p>
+            </div>
+            <div class="hr">
+                <p><a href="#">登录 / 注册</a></p>
+                <p><a href="#">个人中心 <img src="images/index/u113.png" /></a></p>
+                <p><a href="#">商家中心 <img src="images/index/u113.png" /></a></p>
+            </div>
+        </div>
+    </div>
+    <div class="h_se">
+        <div class="s_logo">
+            <img id="u135_img" class="img " src="images/index/u135.png">
+        </div>
+        <div class="s_search">
+            <input type="text" id="ss" />
+            <input type="button" id="sb" value="搜职位" />
+            <img  id="si" src="images/index/u138.png" />
+            <ul>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+                <li><a href="#">收营员</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div id="quanbu" class="hm">
+        <div class="hm_1">
+            <div class="hm_1_l">职位：</div>
+            <div id="zhiwei" class="hm_1_r">
+                <ul>
+                    <li><a href="#"   class="s">全部</a></li>
+                    
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1">
+            <div class="hm_1_l">地点：</div>
+            <div id="didian" class="hm_1_r">
+                <ul>
+                    <li><a href="#"   class="s">全部</a></li>
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1">
+            <div class="hm_1_l">福利：</div>
+            <div id="fuli" class="hm_1_r">
+                <ul>
+                    <li><a href="#"   class="s">全部</a></li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="c"></div>
+        </div>
+        <div class="hm_1 b">
+            <div class="hm_1_l">已选：</div>
+            <div class="hm_1_r">
+                <div class="yx">超市/零售 - 收营员 <img id="u192_img" class="img " src="images/index/u192.png"></div>
+            </div>
+            <div class="c"></div>
+        </div>
+    </div>
+
+    <div id="con_menu">
+        
+            
+        </div>
+    </div>
+
+    <div class="ym">
+        <ul>
+            <li>&lt;</li>
+            <li>1</li>
+            <li>2</li>
+            <li>...</li>
+            <li>10</li>
+            <li>&gt;</li>
+        </ul>
+    </div>
+
+    <div class="f" style=" border:1px solid #999;">
+        
+        ©2015-2019 ####################有限公司 ##ICP备#############号 ##公网安备###############号 联系电话：####-###########
+    </div>
+</body>
+</html>
+<script>
+    var baseUrl="http://47.106.244.1:7777"
+    //加载职位信息
+    function lodeJob(){
+        var url=baseUrl+"/Employment/findAll"
+        $.get(url,function(result){
+            var arr=result.data
+            //去重
+            function unique(arr){
+                for (var i = 0; i < arr.length; i++) {
+                    for (var j =i+1; j <arr.length; ) {
+                        if (arr[i].job === arr[j].job ) {//通过job属性进行匹配；
+                            arr.splice(j, 1);//去除重复的对象；
+                        }else {
+                            j++;
+                        }
+                    }
+                }
+            }
+            unique(arr)
+        arr.forEach(function(itme){
+            $(`<li><a href="javascript:;" >`+itme.job+`</a></li>`).appendTo($("#zhiwei ul"))
+
+        })
+        })
+    }
+    //加载地点信息
+    function lodeCity(){
+        var url=baseUrl+"/City/findAll"
+        $.get(url,function(result){
+            var arr=result.data
+            //去重
+            function unique(arr){
+                for (var i = 0; i < arr.length; i++) {
+                    for (var j =i+1; j <arr.length; ) {
+                        if (arr[i].name === arr[j].name ) {//通过job属性进行匹配；
+                            arr.splice(j, 1);//去除重复的对象；
+                        }else {
+                            j++;
+                        }
+                    }
+                }
+            }
+            unique(arr)
+            result.data.forEach(function(itme){
+                $(`<li><a href="javascript:;">`+itme.name+`</a></li>`).appendTo($("#didian ul"))
+            })
+        })
+    }
+    //加载福利信息
+    function lodeFuli(){
+        var url=baseUrl+"/Welfare/findAll"
+        $.get(url,function(result){
+            var arr=result.data
+            //去重
+            function unique(arr){
+                for (var i = 0; i < arr.length; i++) {
+                    for (var j =i+1; j <arr.length; ) {
+                        if (arr[i].name === arr[j].name ) {//通过job属性进行匹配；
+                            arr.splice(j, 1);//去除重复的对象；
+                        }else {
+                            j++;
+                        }
+                    }
+                }
+            }
+            unique(arr)
+            result.data.forEach(function(itme){
+                 $(`<li><a href="javascript:;">`+itme.name+`</a></li>`).appendTo($("#fuli ul"))
+            })
+        })
+    }
+    //根据职位查找数据
+    $("#zhiwei").on("click","a",function(){
+        $("#zhiwei ul li a").removeClass("s")
+        $(this).addClass("s")
+        var job=$(this).text()
+        var url=baseUrl+"/Employment/findByJob"
+        var data={
+            job:job
+        }
+        $("#con_menu").empty()
+        $.get(url,data,function(result){
+            result.data.forEach(function(itme){
+            $(`<div class="m">
+            <h4>`+itme.title+`</h4>
+            <div class="m_1">`+itme.salary+`元/月</div>
+            <div class="w">
+            <div class="m_2 c1">`+itme.welfare+`</div>
+            <div class="m_2 c2">双休</div>
+            <div class="m_2 c3">带薪年假</div>
+            </div>
+            <div class="m_9">
+                <p>工作时间：`+itme.workingHours+`</p>
+                <p>工作类型：`+itme.job+`</p>
+                <p>招聘人数：`+itme.num+`人</p>
+                <p>工作地点: `+itme.city+`</p>
+            </div>
+            <div class="m_3" onclick="tanChu()">一键报名</div>
+            </div>`).appendTo($("#con_menu"))
+            })
+        })
+    })
+    //根据地点查找数据
+    $("#didian").on("click","a",function(){
+        $("#didian ul li a").removeClass("s")
+        $(this).addClass("s")
+        var job=$(this).text()
+        var url=baseUrl+"/Employment/findByCity"
+        var data={
+            title:job
+        }
+        $("#con_menu").empty()
+        $.get(url,data,function(result){
+            console.log(result.data)
+            result.data.forEach(function(itme){
+            $(`<div class="m">
+            <h4>`+itme.title+`</h4>
+            <div class="m_1">`+itme.salary+`元/月</div>
+            <div class="w">
+            <div class="m_2 c1">`+itme.welfare+`</div>
+            <div class="m_2 c2">双休</div>
+            <div class="m_2 c3">带薪年假</div>
+            </div>
+            <div class="m_9">
+                <p>工作时间：`+itme.workingHours+`</p>
+                <p>工作类型：`+itme.job+`</p>
+                <p>招聘人数：`+itme.num+`人</p>
+                <p>工作地点: `+itme.city+`</p>
+            </div>
+            <div class="m_3" onclick="tanChu()">一键报名</div>
+            </div>`).appendTo($("#con_menu"))
+            })
+        })
+    })
+    //根据福利查找数据
+    $("#fuli").on("click","a",function(){
+        $("#fuli ul li a").removeClass("s")
+        $(this).addClass("s")
+        var job=$(this).text()
+        var url=baseUrl+"/Employment/findByWelfare"
+        var data={
+            title:job
+        }
+        $("#con_menu").empty()
+        $.get(url,data,function(result){
+            console.log(result.data)
+            result.data.forEach(function(itme){
+            $(`<div class="m">
+            <h4>`+itme.title+`</h4>
+            <div class="m_1">`+itme.salary+`元/月</div>
+            <div class="w">
+            <div class="m_2 c1">`+itme.welfare+`</div>
+            <div class="m_2 c2">双休</div>
+            <div class="m_2 c3">带薪年假</div>
+            </div>
+            <div class="m_9">
+                <p>工作时间：`+itme.workingHours+`</p>
+                <p>工作类型：`+itme.job+`</p>
+                <p>招聘人数：`+itme.num+`人</p>
+                <p>工作地点: `+itme.city+`</p>
+            </div>
+            <div class="m_3" onclick="tanChu()">一键报名</div>
+            </div>`).appendTo($("#con_menu"))
+            })
+        })
+    })
+    //快速注册模态框
+    function tanChu(){
+        alert(9)
+    }
+    //点击全部加载详细内容
+    $("#quanbu").on("click","li",function(){
+        if($(this).text()==="全部"){
+            var url=baseUrl+"/Employment/findAll"
+            $("#con_menu").empty()
+            $.get(url,function(result){
+                result.data.forEach(function(itme){
+                $(`<div class="m">
+                <h4>`+itme.title+`</h4>
+                <div class="m_1">`+itme.salary+`元/月</div>
+                <div class="w">
+                <div class="m_2 c1">`+itme.welfare+`</div>
+                <div class="m_2 c2">双休</div>
+                <div class="m_2 c3">带薪年假</div>
+                </div>
+                <div class="m_9">
+                    <p>工作时间：`+itme.workingHours+`</p>
+                    <p>工作类型：`+itme.job+`</p>
+                    <p>招聘人数：`+itme.num+`人</p>
+                    <p>工作地点: `+itme.city+`</p>
+                </div>
+                <div class="m_3" onclick="tanChu()">一键报名</div>
+                </div>`).appendTo($("#con_menu"))
+                })
+            })
+        }
+    })
+//加载全部数据
+function lodaData(){
+    var url=baseUrl+"/Employment/findAll"
+            $.get(url,function(result){
+                result.data.forEach(function(itme){
+                $(`<div class="m">
+                <h4>`+itme.title+`</h4>
+                <div class="m_1">`+itme.salary+`元/月</div>
+                <div class="w">
+                <div class="m_2 c1">`+itme.welfare+`</div>
+                <div class="m_2 c2">双休</div>
+                <div class="m_2 c3">带薪年假</div>
+                </div>
+                <div class="m_9">
+                    <p>工作时间：`+itme.workingHours+`</p>
+                    <p>工作类型：`+itme.job+`</p>
+                    <p>招聘人数：`+itme.num+`人</p>
+                    <p>工作地点: `+itme.city+`</p>
+                </div>
+                <div class="m_3" onclick="tanChu()">一键报名</div>
+                </div>`).appendTo($("#con_menu"))
+                })
+            })
+}    
+    $(function(){
+        lodeJob()
+        lodeCity()
+        lodeFuli()
+        lodaData()
+    })
+</script>
